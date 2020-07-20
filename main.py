@@ -2,7 +2,13 @@
 # -*- coding: utf-8 -*-
 
 import os
+import logging
+
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
+
+logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO)
+
+logger = logging.getLogger(__name__)
 
 ADMIN = os.environ["ADMIN"]
 
@@ -40,8 +46,8 @@ def main():
     dp.add_handler(MessageHandler(Filters.text & ~Filters.command, calcularTickets))
 
     updater.start_webhook(listen="0.0.0.0",port=int(PORT),url_path=TOKEN)
-	updater.bot.setWebhook("https://{}.herokuapp.com/{}".format(NAME, TOKEN))
-	updater.idle()
+    updater.bot.setWebhook("https://{}.herokuapp.com/{}".format(NAME, TOKEN))
+    updater.idle()
     
     updater.idle()
 
