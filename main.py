@@ -18,20 +18,23 @@ def start(update, context):
 
 def calcularTickets(update, context):
     res = "Tickets 4:"
-    cantidad = int(update.message.text)
-    cuatroTemp = 0
-    tresTemp = 0
-    ticketsRepartidos = int(cantidad / 7)
-    i = 1
-    while i >= -1:
-        cuatroTemp = ticketsRepartidos + i
-        cantidadRestante = int(cantidad  - (cuatroTemp * 4))
-        tresTemp = int(cantidadRestante / 3)
-        falta = cantidad - (cuatroTemp * 4) - (tresTemp * 3)
-        if falta == 0:
-            res = "Tickets 4: " + str(cuatroTemp) + "\nTickets 3: " + str(tresTemp)
-        i -= 1
-    update.message.reply_text(res)
+    try:
+        cantidad = int(update.message.text)
+        cuatroTemp = 0
+        tresTemp = 0
+        ticketsRepartidos = int(cantidad / 7)
+        i = 1
+        while i >= -1:
+            cuatroTemp = ticketsRepartidos + i
+            cantidadRestante = int(cantidad  - (cuatroTemp * 4))
+            tresTemp = int(cantidadRestante / 3)
+            falta = cantidad - (cuatroTemp * 4) - (tresTemp * 3)
+            if falta == 0:
+                res = "Tickets 4: " + str(cuatroTemp) + "\nTickets 3: " + str(tresTemp)
+            i -= 1
+        update.message.reply_text(res)
+    except:
+        update.message.reply_text("Por favor, envía un precio válido:")
 
 def main():
     TOKEN = os.environ["BOTTOKEN"]
