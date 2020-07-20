@@ -42,7 +42,6 @@ def main():
     dp = updater.dispatcher
     
     dp.add_handler(CommandHandler("start", start))
-    dp.add_handler(CommandHandler("help", help_command))
     dp.add_handler(MessageHandler(Filters.text & ~Filters.command, calcularTickets))
 
     updater.start_webhook(listen="0.0.0.0",port=int(PORT),url_path=TOKEN)
