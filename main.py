@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+import os
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
 
 ADMIN = os.environ["ADMIN"]
