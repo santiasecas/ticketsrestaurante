@@ -30,12 +30,19 @@ def calcularTickets(update, context):
 def main():
     TOKEN = os.environ["BOTTOKEN"]
     NAME = os.environ["NAME"]
+    PORT = os.environ.get('PORT')
+    
     updater = Updater(TOKEN, use_context=True)
     dp = updater.dispatcher
+    
     dp.add_handler(CommandHandler("start", start))
     dp.add_handler(CommandHandler("help", help_command))
     dp.add_handler(MessageHandler(Filters.text & ~Filters.command, calcularTickets))
-    updater.start_polling()
+
+    updater.start_webhook(listen="0.0.0.0",port=int(PORT),url_path=TOKEN)
+	updater.bot.setWebhook("https://{}.herokuapp.com/{}".format(NAME, TOKEN))
+	updater.idle()
+    
     updater.idle()
 
 if __name__ == '__main__':
