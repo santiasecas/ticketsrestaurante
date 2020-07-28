@@ -13,8 +13,9 @@ logger = logging.getLogger(__name__)
 ADMIN = os.environ["ADMIN"]
 
 def start(update, context):
-    update.send_message(ADMIN,'Nuevo usuario: @' + str(update.message.from_user.username))
-    update.message.reply_text('Welcome ' + update.message.from_user.username + '\nYou can contact me at @santiasecas')
+    nuevoUsuario = str(update.message.from_user.username)
+    context.bot.send_message(ADMIN,'Nuevo usuario: @' + nuevoUsuario)
+    update.message.reply_text('Welcome ' + nuevoUsuario + '\nYou can contact me at @santiasecas')
 
 def calcularTickets(update, context):
     res = "Tickets 4:"
