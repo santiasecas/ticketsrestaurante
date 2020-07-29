@@ -20,7 +20,11 @@ def start(update, context):
 def calcularTickets(update, context):
     res = "Tickets 4:"
     try:
-        cantidad = int(update.message.text)
+        mensaje = update.message.text
+        print(mensaje)
+        argumentos = mensaje.split(' ')
+        print(argumentos)
+        cantidad = int(mensaje)
         cuatroTemp = 0
         tresTemp = 0
         ticketsRepartidos = int(cantidad / 7)
