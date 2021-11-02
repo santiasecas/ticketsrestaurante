@@ -23,34 +23,22 @@ def calcularTickets(update, context):
     try:
         mensaje = update.message.text
         argumentos = mensaje.split(' ')
-        if len(argumentos) == 1 or len(argumentos) == 3:
-            if len(argumentos) == 1:
-                cantidad = int(mensaje)
-            elif len(argumentos) == 3:
-                cantidad = int(argumentos[0])
-                tope = argumentos[1]
-                maximo = int(argumentos[2])
-            cuatroTemp = 0
-            tresTemp = 0
-            ticketsRepartidos = int(cantidad / 7)
-            i = 1
-            if(tope == 'max4'):
-                print('Hay un tope de 4')
-            elif(tope =='max3'):
-                print('Hay un tope de 3')
+        cantidad = int(argumentos[0])
+        cuatroTemp = 0
+        tresTemp = 0
+        ticketsRepartidos = int(cantidad / 7)
+        i = 1
 
-            while i >= -1:
-                cuatroTemp = ticketsRepartidos + i
-                cantidadRestante = int(cantidad  - (cuatroTemp * 4))
-                tresTemp = int(cantidadRestante / 3)
-                falta = cantidad - (cuatroTemp * 4) - (tresTemp * 3)
-                if falta == 0:
-                    res = "Tickets 4: " + str(cuatroTemp) + "\nTickets 3: " + str(tresTemp)
-                i -= 1
-            update.message.reply_text(res)
-        else:
-            update.message.reply_text("Por favor, envía un precio válido:")
-            
+        while i >= -1:
+            cuatroTemp = ticketsRepartidos + i
+            cantidadRestante = int(cantidad  - (cuatroTemp * 4))
+            tresTemp = int(cantidadRestante / 3)
+            falta = cantidad - (cuatroTemp * 4) - (tresTemp * 3)
+            if falta == 0:
+                res = "Tickets 4: " + str(cuatroTemp) + "\nTickets 3: " + str(tresTemp)
+            i -= 1
+        update.message.reply_text(res)
+
     except:
         update.message.reply_text("Por favor, envía un precio válido:")
 
