@@ -3,19 +3,24 @@
 
 import os
 import logging
+import configparser
 
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
 
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO)
-
 logger = logging.getLogger(__name__)
 
-ADMIN = os.environ["ADMIN"]
+ruta = os.path.dirname(__file__)
+
+config = configparser.ConfigParser()
+config.read(f'{ruta}/config.ini')
+
+ADMIN = config['BOT_CONFIG']['ADMIN']
 
 def start(update, context):
-    nuevoUsuario = str(update.message.from_user.username)
-    context.bot.send_message(ADMIN,'Nuevo usuario: @' + nuevoUsuario)
-    update.message.reply_text('Welcome ' + nuevoUsuario + '\nYou can contact me at @santiasecas')
+    nuevo_usuario = str(update.message.from_user.username)
+    context.bot.send_message(ADMIN,f'Nuevo usuario: @{nuevo_usuario}')
+    update.message.reply_text(f'Welcome, {nuevo_usuario}\nYou can contact me at @santiasecas')
 
 def calcularTickets(update, context):
     res = "Tickets 4:"
@@ -43,9 +48,7 @@ def calcularTickets(update, context):
         update.message.reply_text("Por favor, envía un precio válido:")
 
 def main():
-    TOKEN = os.environ["BOTTOKEN"]
-    NAME = os.environ["NAME"]
-    PORT = os.environ.get('PORT')
+    TOKEN = config['BOT_CONFIG']['TOKEN']
     
     updater = Updater(TOKEN, use_context=True)
     dp = updater.dispatcher
@@ -53,10 +56,7 @@ def main():
     dp.add_handler(CommandHandler("start", start))
     dp.add_handler(MessageHandler(Filters.text & ~Filters.command, calcularTickets))
 
-    updater.start_webhook(listen="0.0.0.0",port=int(PORT),url_path=TOKEN)
-    updater.bot.setWebhook("https://{}.herokuapp.com/{}".format(NAME, TOKEN))
-    updater.idle()
-    
+    updater.start_polling()    
     updater.idle()
 
 if __name__ == '__main__':
